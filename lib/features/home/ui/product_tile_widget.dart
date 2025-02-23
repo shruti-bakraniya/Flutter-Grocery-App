@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_grocery_app/features/home/bloc/home_bloc.dart';
 import 'package:flutter_grocery_app/features/home/models/home_product_data_model.dart';
 
 class ProductTileWidget extends StatelessWidget {
+  final HomeBloc homeBloc;
   final ProductDataModel productDataModel;
 
   const ProductTileWidget({super.key,
+    required this.homeBloc,
     required this.productDataModel
   });
 
@@ -84,13 +87,21 @@ class ProductTileWidget extends StatelessWidget {
                     icon: const Icon(
                       Icons.favorite_border,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      homeBloc.add(HomeProductWishlistButtonClickedEvent(
+                        clickedProduct: productDataModel,
+                      ));
+                    },
                   ),
                   IconButton(
                     icon: const Icon(
                       Icons.shopping_cart_outlined,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      homeBloc.add(HomeProductCartButtonClickedEvent(
+                        clickedProduct: productDataModel,
+                      ));
+                    },
                   ),
                 ],
               ),
