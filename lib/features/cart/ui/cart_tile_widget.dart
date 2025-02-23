@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_grocery_app/features/home/bloc/home_bloc.dart';
+import 'package:flutter_grocery_app/features/cart/bloc/cart_bloc.dart';
 import 'package:flutter_grocery_app/features/home/models/home_product_data_model.dart';
 
-class ProductTileWidget extends StatelessWidget {
-  final HomeBloc homeBloc;
+class CartTileWidget extends StatelessWidget {
+  final CartBloc cartBloc;
   final ProductDataModel productDataModel;
 
-  const ProductTileWidget({super.key,
-    required this.homeBloc,
+  const CartTileWidget({super.key,
+    required this.cartBloc,
     required this.productDataModel
   });
 
@@ -31,16 +31,16 @@ class ProductTileWidget extends StatelessWidget {
             height: 200,
             width: double.maxFinite,
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-              ),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                  productDataModel.imageUrl,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
                 ),
-              )
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    productDataModel.imageUrl,
+                  ),
+                )
             ),
           ),
           Padding(
@@ -87,20 +87,14 @@ class ProductTileWidget extends StatelessWidget {
                     icon: const Icon(
                       Icons.favorite_border,
                     ),
-                    onPressed: () {
-                      homeBloc.add(HomeProductWishlistButtonClickedEvent(
-                        clickedProduct: productDataModel,
-                      ));
-                    },
+                    onPressed: () {},
                   ),
                   IconButton(
                     icon: const Icon(
-                      Icons.shopping_cart_outlined,
+                      Icons.shopping_cart,
                     ),
                     onPressed: () {
-                      homeBloc.add(HomeProductCartButtonClickedEvent(
-                        clickedProduct: productDataModel,
-                      ));
+                      cartBloc.add(CartRemoveItemEvent(productDataModel: productDataModel));
                     },
                   ),
                 ],
